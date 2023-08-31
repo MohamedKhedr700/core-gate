@@ -10,9 +10,19 @@ interface GateInterface
     public function gateable(): string;
 
     /**
-     * Get gateable actions.
+     * Get gateable name.
      */
-    public function getActions();
+    public function gateableName(): string;
+
+    /**
+     * Get gate methods.
+     */
+    public function getGateMethods(): array;
+
+    /**
+     * Get gateable method.
+     */
+    public function getGateableMethod(string $method): string;
 
     /**
      * Register gate.
@@ -20,7 +30,7 @@ interface GateInterface
     public function register(): void;
 
     /**
-     * Define an action gate.
+     * Define gate method.
      */
-    public function defineActionGate(string $actionableAction, string $action): void;
+    public function defineGateMethod(string $method): void;
 }

@@ -24,9 +24,9 @@ trait WithGateProvider
      */
     private function registerGates(): void
     {
-        $gates = config('gate.gates', []);
+        $registeredGated = config('gate.gates', []);
 
-        foreach ($gates as $gateable => $gates) {
+        foreach ($registeredGated as $gateable => $gates) {
             foreach ($gates as $gate) {
                 (new $gate($gateable))->register();
             }

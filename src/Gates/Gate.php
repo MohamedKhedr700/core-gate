@@ -3,7 +3,6 @@
 namespace Raid\Core\Gate\Gates;
 
 use Illuminate\Support\Facades\Gate as GateFacade;
-use Illuminate\Support\Str;
 use Raid\Core\Gate\Gates\Contracts\GateInterface;
 
 abstract class Gate implements GateInterface
@@ -32,9 +31,29 @@ abstract class Gate implements GateInterface
     /**
      * {@inheritdoc}
      */
-    public function getActions()
+    public function gateableName(): string
     {
-        return $this->gateable()::getActions();
+        return $this->gateable()::gateableName();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getGateMethods(): array
+    {
+        $methods = get_class_methods($this);
+
+        $parentMethods = get_class_methods(self::class);
+
+        return array_diff($methods, $parentMethods);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getGateableMethod(string $method): string
+    {
+        return $this->gateableName() . '.' . $method;
     }
 
     /**
@@ -42,25 +61,21 @@ abstract class Gate implements GateInterface
      */
     public function register(): void
     {
-        $actionableActions = $this->getActions();
+        $methods = $this->getGateMethods();
 
-        foreach ($actionableActions as $action) {
-            $this->defineActionGate($action::getAction(), $action::action());
+        foreach ($methods as $method) {
+            $this->defineGateMethod($method);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function defineActionGate(string $actionableAction, string $action): void
+    public function defineGateMethod(string $method): void
     {
-        $method = Str::camel($action);
+        $gateableMethod = $this->getGateableMethod($method);
 
-        if (! method_exists($this, $method)) {
-            return;
-        }
-
-        GateFacade::define($actionableAction, function ($account, ...$arguments) use ($method) {
+        GateFacade::define($gateableMethod, function ($account, ...$arguments) use ($method) {
             return $this->{$method}($account, ...$arguments);
         });
     }
