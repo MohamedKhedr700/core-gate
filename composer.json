@@ -14,18 +14,10 @@
     "require": {
         "php": "^8.2"
     },
-    "require-dev": {
-        "laravel/pint": "^1.10"
-    },
     "autoload": {
         "psr-4": {
             "Raid\\Core\\Gate\\": "src"
         }
-    },
-    "scripts": {
-        "pint": [
-            "./vendor/bin/pint --config pint.json "
-        ]
     },
     "extra": {
         "laravel": {
