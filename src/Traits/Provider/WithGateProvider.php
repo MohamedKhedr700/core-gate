@@ -2,8 +2,6 @@
 
 namespace Raid\Core\Gate\Traits\Provider;
 
-use Raid\Core\Gate\Actions\Contracts\ActionInterface;
-
 trait WithGateProvider
 {
     /**
