@@ -53,7 +53,7 @@ abstract class Gate implements GateInterface
      */
     public function getGateableMethod(string $method): string
     {
-        return $this->gateableName() . '.' . $method;
+        return $this->gateableName().'.'.$method;
     }
 
     /**
