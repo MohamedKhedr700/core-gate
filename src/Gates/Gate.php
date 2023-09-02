@@ -8,9 +8,14 @@ use Raid\Core\Gate\Gates\Contracts\GateInterface;
 abstract class Gate implements GateInterface
 {
     /**
+     * Gate methods.
+     */
+    public const METHODS = [];
+
+    /**
      * Gateable class.
      */
-    private string $gateable;
+    protected string $gateable;
 
     /**
      * Create a new gate instance.
@@ -18,6 +23,14 @@ abstract class Gate implements GateInterface
     public function __construct(string $gateable)
     {
         $this->gateable = $gateable;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function methods(): array
+    {
+        return static::METHODS;
     }
 
     /**
@@ -39,18 +52,6 @@ abstract class Gate implements GateInterface
     /**
      * {@inheritdoc}
      */
-    public function getGateMethods(): array
-    {
-        $methods = get_class_methods($this);
-
-        $parentMethods = get_class_methods(self::class);
-
-        return array_diff($methods, $parentMethods);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getGateableMethod(string $method): string
     {
         return $this->gateableName().'.'.$method;
@@ -61,9 +62,7 @@ abstract class Gate implements GateInterface
      */
     public function register(): void
     {
-        $methods = $this->getGateMethods();
-
-        foreach ($methods as $method) {
+        foreach (static::methods() as $method) {
             $this->defineGateMethod($method);
         }
     }

@@ -5,6 +5,11 @@ namespace Raid\Core\Gate\Gates\Contracts;
 interface GateInterface
 {
     /**
+     * Get gate methods.
+     */
+    public static function methods(): array;
+
+    /**
      * Get gateable class.
      */
     public function gateable(): string;
