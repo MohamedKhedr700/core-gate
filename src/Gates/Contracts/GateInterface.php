@@ -20,11 +20,6 @@ interface GateInterface
     public function gateableName(): string;
 
     /**
-     * Get gate methods.
-     */
-    public function getGateMethods(): array;
-
-    /**
      * Get gateable method.
      */
     public function getGateableMethod(string $method): string;
