@@ -20,6 +20,7 @@ class GateServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->registerConfig();
+        $this->registerCommands();
     }
 
     /**

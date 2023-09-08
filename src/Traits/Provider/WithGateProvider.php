@@ -15,8 +15,16 @@ trait WithGateProvider
 
             $this->publishes([
                 $config => config_path(basename($config)),
-            ], 'config');
+            ], 'config-gate');
         }
+    }
+
+    /**
+     * Register helpers.
+     */
+    private function registerCommands(): void
+    {
+        $this->commands($this->commands);
     }
 
     /**
