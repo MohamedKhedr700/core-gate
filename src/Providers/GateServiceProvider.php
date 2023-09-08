@@ -3,6 +3,7 @@
 namespace Raid\Core\Gate\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Raid\Core\Gate\Commands\PublishCommand;
 use Raid\Core\Gate\Traits\Provider\WithGateProvider;
 
 class GateServiceProvider extends ServiceProvider
@@ -12,7 +13,9 @@ class GateServiceProvider extends ServiceProvider
     /**
      * The commands to be registered.
      */
-    protected array $commands = [];
+    protected array $commands = [
+        PublishCommand::class,
+    ];
 
     /**
      * Register any application services.

@@ -8,12 +8,12 @@ class PublishCommand extends Command
     /**
      * The console command name.
      */
-    protected string $name = 'publish:core-gate';
+    protected $name = 'publish:core-gate';
 
     /**
      * The console command description.
      */
-    protected string $description = 'Publish core gate config files.';
+    protected $description = 'Publish core gate config files.';
 
     /**
      * Execute the console command.
