@@ -2,13 +2,14 @@
 
 namespace Raid\Core\Gate\Commands;
 
-use \Illuminate\Console\Command;
-class PublishCommand extends Command
+use Raid\Core\Command\Commands\PublishCommand;
+
+class PublishGateCommand extends PublishCommand
 {
     /**
      * The console command name.
      */
-    protected $name = 'publish:core-gate';
+    protected $name = 'core:publish-gate';
 
     /**
      * The console command description.
@@ -20,8 +21,6 @@ class PublishCommand extends Command
      */
     public function handle(): void
     {
-        $this->call('vendor:publish', [
-            '--tag' => 'config-gate'
-        ]);
+        $this->publishCommand('config-gate');
     }
 }

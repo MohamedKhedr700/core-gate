@@ -1,0 +1,16 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Raid\Core\Gate\Gates\Contracts\GateInterface;
+use Raid\Core\Gate\Gates\Gate;
+
+class $CLASS_NAME$ extends Gate implements GateInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public const METHODS = [
+        //
+    ];
+}
