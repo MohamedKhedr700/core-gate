@@ -74,6 +74,10 @@ abstract class Gate implements GateInterface
     {
         $gateableMethod = $this->getGateableMethod($method);
 
+        if (! method_exists($this, $method)) {
+            return;
+        }
+
         GateFacade::define($gateableMethod, function ($account, ...$arguments) use ($method) {
             return $this->{$method}($account, ...$arguments);
         });
