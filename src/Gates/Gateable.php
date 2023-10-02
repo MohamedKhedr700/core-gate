@@ -30,7 +30,7 @@ class Gateable implements GateableInterface
         $actions = $this->parseAction($action);
 
         foreach ($actions as $action) {
-            $this->authorizeAction($action, $arguments);
+            $this->authorizeAction($action, ...$arguments);
         }
 
         return $this;
