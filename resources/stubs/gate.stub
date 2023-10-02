@@ -10,5 +10,5 @@ class $CLASS_NAME$ extends Gate implements GateInterface
     /**
      * {@inheritdoc}
      */
-    public const METHODS = [];
+    public const ACTIONS = [];
 }
