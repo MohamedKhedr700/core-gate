@@ -23,7 +23,7 @@ trait Gateable
     }
 
     /**
-     * Get gateable actions.
+     * Authorize gateable action.
      */
     public static function gates(string $action = '', ...$arguments): GateableInterface
     {
@@ -31,7 +31,7 @@ trait Gateable
     }
 
     /**
-     * Get gateable actions.
+     * Get gateable gates.
      */
     public static function getGates(): array
     {
