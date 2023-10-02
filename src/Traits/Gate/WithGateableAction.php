@@ -41,7 +41,7 @@ trait WithGateableAction
     /**
      * Authorize the given action for the given gateable.
      */
-    public function authorizeAction(string $action, array $arguments): void
+    public function authorizeAction(string $action, ...$arguments): void
     {
         Gate::authorize($action, ...$arguments);
     }

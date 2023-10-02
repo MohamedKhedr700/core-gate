@@ -7,7 +7,7 @@ if (! function_exists('gatable')) {
     /**
      * Get gatable instance.
      */
-    function gatable(string $gatable = '', string $action = '', ... $data): GateableInterface
+    function gatable(string $gatable = '', string $action = '', ...$arguments): GateableInterface
     {
         $gatableManager = app(GateableInterface::class, ['gatable' => $gatable]);
 
@@ -15,8 +15,8 @@ if (! function_exists('gatable')) {
             $gatableManager->setAction($action);
         }
 
-        if ($data) {
-            $gatableManager->authorize($action, ...$data);
+        if ($arguments) {
+            $gatableManager->authorize($action, ...$arguments);
         }
 
         return $gatableManager;

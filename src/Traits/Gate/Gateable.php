@@ -25,9 +25,9 @@ trait Gateable
     /**
      * Get gateable actions.
      */
-    public static function gates(string $action = '', ...$data): GateableInterface
+    public static function gates(string $action = '', ...$arguments): GateableInterface
     {
-        return gatable(static::gateable(), $action, ...$data);
+        return gatable(static::gateable(), $action, ...$arguments);
     }
 
     /**
