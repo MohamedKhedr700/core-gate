@@ -2,6 +2,8 @@
 
 namespace Raid\Core\Gate\Traits\Gate;
 
+use Raid\Core\Gate\Gates\Contracts\GateableInterface;
+
 trait Gateable
 {
     /**
@@ -18,6 +20,14 @@ trait Gateable
     public static function gateableName(): string
     {
         return strtolower(class_basename(static::gateable()));
+    }
+
+    /**
+     * Get gateable actions.
+     */
+    public static function gates(string $action = null, ...$data): GateableInterface
+    {
+        return gatable(static::gateable(), $action, $data);
     }
 
     /**

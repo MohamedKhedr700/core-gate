@@ -22,6 +22,18 @@ trait WithGateProvider
     /**
      * Register helpers.
      */
+    private function registerHelpers(): void
+    {
+        $helpers = glob(__DIR__.'/../../Helpers/*.php');
+
+        foreach ($helpers as $helper) {
+            require_once $helper;
+        }
+    }
+
+    /**
+     * Register helpers.
+     */
     private function registerCommands(): void
     {
         $this->commands($this->commands);
