@@ -7,7 +7,7 @@ if (! function_exists('gatable')) {
     /**
      * Get gatable instance.
      */
-    function gatable(string $gatable = '', string $action = '', array $data = []): GateableInterface
+    function gatable(string $gatable = '', string $action = '', ... $data): GateableInterface
     {
         $gatableManager = app(GateableInterface::class, ['gatable' => $gatable]);
 
