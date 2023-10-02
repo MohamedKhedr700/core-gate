@@ -45,4 +45,6 @@ trait WithGateableAction
     {
         Gate::authorize($action, ...$arguments);
     }
+
+
 }

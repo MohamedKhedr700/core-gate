@@ -8,9 +8,9 @@ use Raid\Core\Gate\Gates\Contracts\GateInterface;
 abstract class Gate implements GateInterface
 {
     /**
-     * Gate methods.
+     * Gate actions.
      */
-    public const METHODS = [];
+    public const ACTIONS = [];
 
     /**
      * Gateable class.
@@ -28,9 +28,9 @@ abstract class Gate implements GateInterface
     /**
      * {@inheritdoc}
      */
-    public static function methods(): array
+    public static function actions(): array
     {
-        return static::METHODS;
+        return static::ACTIONS;
     }
 
     /**
@@ -52,9 +52,9 @@ abstract class Gate implements GateInterface
     /**
      * {@inheritdoc}
      */
-    public function getGateableMethod(string $method): string
+    public function getGateableAction(string $action): string
     {
-        return $this->gateableName().'.'.$method;
+        return $this->gateableName().'.'.$action;
     }
 
     /**
@@ -62,25 +62,26 @@ abstract class Gate implements GateInterface
      */
     public function register(): void
     {
-        foreach (static::methods() as $method) {
-            $this->defineGateMethod($method);
+        foreach (static::actions() as $action) {
+            $this->defineActionMethod($action);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function defineGateMethod(string $method): void
+    public function defineActionMethod(string $action): void
     {
-        $gateableMethod = $this->getGateableMethod($method);
-
-        if (! method_exists($this, $method)) {
+        if (! method_exists($this, $action)) {
             return;
         }
 
-//        IlluminateGate::define($gateableMethod, [static::class, $method]);
-        IlluminateGate::define($gateableMethod, function ($account, ...$arguments) use ($method) {
-            return $this->{$method}($account, ...$arguments);
+        $gateableAction = $this->getGateableAction($action);
+
+        IlluminateGate::define($gateableAction, function ($account, ...$arguments) use ($action) {
+            return $this->{$action}($account, ...$arguments);
         });
+
+//        IlluminateGate::define($gateableMethod, [static::class, $method]);
     }
 }

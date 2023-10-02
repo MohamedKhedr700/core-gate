@@ -5,9 +5,9 @@ namespace Raid\Core\Gate\Gates\Contracts;
 interface GateInterface
 {
     /**
-     * Get gate methods.
+     * Get gate actions.
      */
-    public static function methods(): array;
+    public static function actions(): array;
 
     /**
      * Get gateable class.
@@ -20,9 +20,9 @@ interface GateInterface
     public function gateableName(): string;
 
     /**
-     * Get gateable method.
+     * Get gateable action.
      */
-    public function getGateableMethod(string $method): string;
+    public function getGateableAction(string $action): string;
 
     /**
      * Register gate.
@@ -30,7 +30,7 @@ interface GateInterface
     public function register(): void;
 
     /**
-     * Define gate method.
+     * Define action method.
      */
-    public function defineGateMethod(string $method): void;
+    public function defineActionMethod(string $action): void;
 }
