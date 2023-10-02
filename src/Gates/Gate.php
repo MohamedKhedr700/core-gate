@@ -78,6 +78,6 @@ abstract class Gate implements GateInterface
             return;
         }
 
-        IlluminateGate::define($gateableMethod, [$this, $method]);
+        IlluminateGate::define($gateableMethod, [static::class, $method]);
     }
 }
