@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Gate\Gates;
 
-use Illuminate\Support\Facades\Gate as GateFacade;
+use Illuminate\Support\Facades\Gate as IlluminateGate;
 use Raid\Core\Gate\Gates\Contracts\GateInterface;
 
 abstract class Gate implements GateInterface
@@ -78,7 +78,7 @@ abstract class Gate implements GateInterface
             return;
         }
 
-        GateFacade::define($gateableMethod, function ($account, ...$arguments) use ($method) {
+        IlluminateGate::define($gateableMethod, function ($account, ...$arguments) use ($method) {
             return $this->{$method}($account, ...$arguments);
         });
     }
