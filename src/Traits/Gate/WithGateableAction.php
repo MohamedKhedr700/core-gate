@@ -2,6 +2,8 @@
 
 namespace Raid\Core\Gate\Traits\Gate;
 
+use Illuminate\Support\Facades\Gate;
+
 trait WithGateableAction
 {
     /**

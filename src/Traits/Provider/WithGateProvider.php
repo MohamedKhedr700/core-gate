@@ -48,7 +48,7 @@ trait WithGateProvider
     private function registerGates(): void
     {
         $this->registerGateableManager();
-        $this->registerGateableGates();
+//        $this->registerGateableGates();
     }
 
     /**
