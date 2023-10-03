@@ -52,20 +52,33 @@ trait WithGateProvider
         $this->registerGateableGates();
     }
 
-    /**
-     * Register gateable manager.
-     */
-    private function registerGateableManager(): void
-    {
-        $this->app->bind(GateableInterface::class, config('gate.gateable_manager'));
-    }
 
     /**
      * Register gate manager.
      */
     private function registerGateManager(): void
     {
-        $this->app->singleton(GateManagerInterface::class, config('gate.gate_manager'));
+        $gateManager = config('gate.gateable_manager');
+
+        if (is_null($gateManager)) {
+            return;
+        }
+
+        $this->app->singleton(GateManagerInterface::class, $gateManager);
+    }
+
+    /**
+     * Register gateable manager.
+     */
+    private function registerGateableManager(): void
+    {
+        $gateableManager = config('gate.gateable_manager');
+
+        if (is_null($gateableManager)) {
+            return;
+        }
+
+        $this->app->bind(GateableInterface::class, $gateableManager);
     }
 
     /**
