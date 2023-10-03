@@ -133,7 +133,7 @@ The gate class must extend `Gate` class.
 
 The gate class must define `ACTIONS` constant, which is the gate methods that will be defined with the `Illuminate\Support\Facades\Gate` class.
 
-Now, let's define our gate first method.
+Let's define our gate first method.
 
 ``` php
 <?php
