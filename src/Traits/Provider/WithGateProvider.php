@@ -74,9 +74,9 @@ trait WithGateProvider
     {
 //        $gateableManager = config('gate.gateable_manager');
 
-        if (is_null($gateableManager)) {
-            return;
-        }
+//        if (is_null($gateableManager)) {
+//            return;
+//        }
 
         $this->app->bind(GateableInterface::class, config('gate.gateable_manager'));
     }
