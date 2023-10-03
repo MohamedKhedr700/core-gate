@@ -58,13 +58,13 @@ trait WithGateProvider
      */
     private function registerGateManager(): void
     {
-        $gateManager = config('gate.gateable_manager');
+//        $gateManager = config('gate.gate_manager');
+//
+//        if (is_null($gateManager)) {
+//            return;
+//        }
 
-        if (is_null($gateManager)) {
-            return;
-        }
-
-        $this->app->singleton(GateManagerInterface::class, $gateManager);
+        $this->app->singleton(GateManagerInterface::class, config('gate.gate_manager'));
     }
 
     /**
@@ -72,13 +72,13 @@ trait WithGateProvider
      */
     private function registerGateableManager(): void
     {
-        $gateableManager = config('gate.gateable_manager');
+//        $gateableManager = config('gate.gateable_manager');
 
         if (is_null($gateableManager)) {
             return;
         }
 
-        $this->app->bind(GateableInterface::class, $gateableManager);
+        $this->app->bind(GateableInterface::class, config('gate.gateable_manager'));
     }
 
     /**
@@ -86,6 +86,10 @@ trait WithGateProvider
      */
     private function registerGateableGates(): void
     {
+        if (is_null(config('gate.gate_manager'))) {
+            return;
+        }
+
         $gateManager = app(GateManagerInterface::class);
 
         $gateManager::defineGates();
