@@ -49,11 +49,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Raid\Core\Gate\Traits\Gate\Gateable;
 
-class User extends Model
+class Post extends Model
 {
     use Gateable;
 }
 ```
+
+The gateable class must use `Gateable` trait.
 
 To define the gates, we can use two ways.
 
