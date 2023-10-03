@@ -52,17 +52,16 @@ trait WithGateProvider
         $this->registerGateableGates();
     }
 
-
     /**
      * Register gate manager.
      */
     private function registerGateManager(): void
     {
-//        $gateManager = config('gate.gate_manager');
-//
-//        if (is_null($gateManager)) {
-//            return;
-//        }
+        //        $gateManager = config('gate.gate_manager');
+        //
+        //        if (is_null($gateManager)) {
+        //            return;
+        //        }
 
         $this->app->singleton(GateManagerInterface::class, config('gate.gate_manager'));
     }
@@ -72,11 +71,11 @@ trait WithGateProvider
      */
     private function registerGateableManager(): void
     {
-//        $gateableManager = config('gate.gateable_manager');
+        //        $gateableManager = config('gate.gateable_manager');
 
-//        if (is_null($gateableManager)) {
-//            return;
-//        }
+        //        if (is_null($gateableManager)) {
+        //            return;
+        //        }
 
         $this->app->bind(GateableInterface::class, config('gate.gateable_manager'));
     }
