@@ -2,7 +2,6 @@
 
 namespace Raid\Core\Gate\Gates;
 
-use Illuminate\Support\Facades\Gate;
 use Raid\Core\Gate\Gates\Contracts\GateableInterface;
 use Raid\Core\Gate\Traits\Gate\WithGateable;
 use Raid\Core\Gate\Traits\Gate\WithGateableAction;

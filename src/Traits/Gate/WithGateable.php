@@ -4,11 +4,10 @@ namespace Raid\Core\Gate\Traits\Gate;
 
 trait WithGateable
 {
-
     /**
      * Gatable class name.
      */
-    protected string $gatable ;
+    protected string $gatable;
 
     /**
      * Get gatable class name.

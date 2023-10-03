@@ -25,9 +25,9 @@ interface GateInterface
     public function getGateableAction(string $action): string;
 
     /**
-     * Register gate.
+     * Define gate.
      */
-    public function register(): void;
+    public function define(): void;
 
     /**
      * Define action method.

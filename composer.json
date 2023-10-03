@@ -13,9 +13,15 @@
     ],
     "require": {
         "php": "^8.2",
-        "raid/core-command": "dev-main"
+        "raid/core-command": "dev-main",
+        "laravel/pint": "dev-main"
     },
-    "autoload": {
+    "scripts": {
+        "pint": [
+            "./vendor/bin/pint --config pint.json "
+        ]
+    },
+        "autoload": {
         "psr-4": {
             "Raid\\Core\\Gate\\": "src"
         }

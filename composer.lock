@@ -4,20 +4,87 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7808562dfcffa0519a48200458fd24eb",
+    "content-hash": "30d65a4994a096effaafebb889e3a7da",
     "packages": [
+        {
+            "name": "laravel/pint",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/pint.git",
+                "reference": "2e0eeece3fec0d96effebb99393d69385e5eb675"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/pint/zipball/2e0eeece3fec0d96effebb99393d69385e5eb675",
+                "reference": "2e0eeece3fec0d96effebb99393d69385e5eb675",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-tokenizer": "*",
+                "ext-xml": "*",
+                "php": "^8.1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.26.1",
+                "illuminate/view": "^10.23.1",
+                "laravel-zero/framework": "^10.1.2",
+                "mockery/mockery": "^1.6.6",
+                "nunomaduro/larastan": "^2.6.4",
+                "nunomaduro/termwind": "^1.15.1",
+                "pestphp/pest": "^2.18.2"
+            },
+            "default-branch": true,
+            "bin": [
+                "builds/pint"
+            ],
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "App\\": "app/",
+                    "Database\\Seeders\\": "database/seeders/",
+                    "Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nuno Maduro",
+                    "email": "enunomaduro@gmail.com"
+                }
+            ],
+            "description": "An opinionated code formatter for PHP.",
+            "homepage": "https://laravel.com",
+            "keywords": [
+                "format",
+                "formatter",
+                "lint",
+                "linter",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/pint/issues",
+                "source": "https://github.com/laravel/pint"
+            },
+            "time": "2023-09-21T14:54:18+00:00"
+        },
         {
             "name": "raid/core-command",
             "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MohamedKhedr700/core-command.git",
-                "reference": "6fbd6389463c229851cd559024c116db26856cff"
+                "reference": "875432b6493f16e41de2b1f3bbbeb095316822a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MohamedKhedr700/core-command/zipball/6fbd6389463c229851cd559024c116db26856cff",
-                "reference": "6fbd6389463c229851cd559024c116db26856cff",
+                "url": "https://api.github.com/repos/MohamedKhedr700/core-command/zipball/875432b6493f16e41de2b1f3bbbeb095316822a1",
+                "reference": "875432b6493f16e41de2b1f3bbbeb095316822a1",
                 "shasum": ""
             },
             "require": {
@@ -61,13 +128,16 @@
                 "issues": "https://github.com/MohamedKhedr700/core-command/issues",
                 "source": "https://github.com/MohamedKhedr700/core-command/tree/main"
             },
-            "time": "2023-09-28T22:59:26+00:00"
+            "time": "2023-09-30T15:30:23+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "raid/core-command": 20,
+        "laravel/pint": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

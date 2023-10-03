@@ -1,6 +1,5 @@
 <?php
 
-
 use Raid\Core\Gate\Gates\Contracts\GateableInterface;
 
 if (! function_exists('gatable')) {

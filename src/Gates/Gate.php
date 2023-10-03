@@ -60,7 +60,7 @@ abstract class Gate implements GateInterface
     /**
      * {@inheritdoc}
      */
-    public function register(): void
+    public function define(): void
     {
         foreach (static::actions() as $action) {
             $this->defineActionMethod($action);
@@ -82,6 +82,6 @@ abstract class Gate implements GateInterface
             return $this->{$action}($account, ...$arguments);
         });
 
-//        IlluminateGate::define($gateableMethod, [static::class, $method]);
+        //        IlluminateGate::define($gateableMethod, [static::class, $method]);
     }
 }

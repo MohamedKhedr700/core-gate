@@ -2,8 +2,8 @@
 
 namespace Raid\Core\Gate\Traits\Provider;
 
-use Raid\Core\Event\Events\Contracts\EventableInterface;
 use Raid\Core\Gate\Gates\Contracts\GateableInterface;
+use Raid\Core\Gate\Gates\Contracts\GateManagerInterface;
 
 trait WithGateProvider
 {
@@ -47,6 +47,7 @@ trait WithGateProvider
      */
     private function registerGates(): void
     {
+        $this->registerGateManager();
         $this->registerGateableManager();
         $this->registerGateableGates();
     }
@@ -60,16 +61,20 @@ trait WithGateProvider
     }
 
     /**
+     * Register gate manager.
+     */
+    private function registerGateManager(): void
+    {
+        $this->app->singleton(GateManagerInterface::class, config('gate.gate_manager'));
+    }
+
+    /**
      * Register gateable gates.
      */
-    private function registerGateableGates()
+    private function registerGateableGates(): void
     {
-        $registeredGated = config('gate.gates', []);
+        $gateManager = app(GateManagerInterface::class);
 
-        foreach ($registeredGated as $gateable => $gates) {
-            foreach ($gates as $gate) {
-                (new $gate($gateable))->register();
-            }
-        }
+        $gateManager::defineGates();
     }
 }
