@@ -18,33 +18,28 @@ php artisan core:publish-gate
 ## Usage
 
 ``` php
-class UserController extends Controller
+class PostController extends Controller
 {
     /**
      * Invoke the controller method.
      */
-    public function __invoke(Request $request)
+    public function __invoke(Post $post)
     {
-        $user = User::create($request->only(['name', 'email', 'password']));
-        
-        // let's trigger the create event.
-        User::events('create', $user);
-        
-        // or using the trigger method
-        User::events()->trigger('create', $user);
+        Post::gates('show', $post);
 
-        // using the facade
-        Events::trigger('user.create', $user);
+        // or using the authorize method.
+        Post::gates()->authorize('show', $post);
         
-        // using the helper
-        events()->trigger('user.create', $user);
+        return response()->json([
+            'post' => $post,
+        ]);
     }
 }
 ```
 
 # How to work this
 
-Let's start with our eventable class `User`.
+Let's start with our gateable class ex:`Post` model.
 
 ``` php
 <?php
@@ -52,205 +47,153 @@ Let's start with our eventable class `User`.
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Raid\Core\Event\Traits\Event\Eventable;
+use Raid\Core\Gate\Traits\Gate\Gateable;
 
 class User extends Model
 {
-    use Eventable;
+    use Gateable;
 }
 ```
 
-To define the eventable class ex:`User` model events, we have two ways:
+To define the gates, we can use two ways.
 
-1. Define `getEvents` method.
+But remember if `getGates` method is defined, the `config/gate.php` gates will be ignored.
+
+1.Define `getGates` method.
 
 ``` php
 <?php
 
 namespace App\Models;
 
+use App\Http\Gates\PostGate;
 use Illuminate\Database\Eloquent\Model;
-use Raid\Core\Event\Traits\Event\Eventable;
-use App\Events\CreateUserEvent;
+use Raid\Core\Gate\Traits\Gate\Gateable;
 
 class User extends Model
 {
-    use Eventable;
+    use Gateable;
     
     /**
-     * Get eventable events.
+     * Get gateable gates.
      */
-    public static function getEvents(): array
+    public static function getGates(): array
     {
         return [
-            // here we define our event classes.
-            CreateUserEvent::class,
+            // here we define our gate classes.
+            PostGate::class,
         ];
     }
 }
 ```
 
-2. Define `config/event.php` events.
+2. Define `config/gate.php` events.
 
 ``` php
-'events' => [
-    // here we define our eventable class.
-    User::class => [
-        // here we define our event classes.
-        CreateUserEvent::class,
+'gates' => [
+    // here we define our gateable class.
+    Post::class => [
+        // here we define our gate classes.
+        PostGate::class,
     ],
 ], 
 ```
 
-Now, let's create our event class `CreateUserEvent`.
+Now, let's create our gate class `PostGate`.
 
-you can use this command to create the event class.
+you can use this command to create the gate class.
 
 ``` bash
-php artisan core:make-event CreateUserEvent
+php artisan core:make-gate PostGate
 ```
-Here is the event class.
+Here is the gate class.
 
 ``` php
 <?php
 
-namespace App\Events;
+namespace App\Http\Gates;
 
-use Raid\Core\Event\Events\Contracts\EventInterface;
-use Raid\Core\Event\Events\Event;
+use Raid\Core\Gate\Gates\Contracts\GateInterface;
+use Raid\Core\Gate\Gates\Gate;
 
-class CreateUserEvent extends Event implements EventInterface
+class PostGate extends Gate implements GateInterface
 {
     /**
      * {@inheritdoc}
      */
-    public const ACTION = '';
-
-    /**
-     * {@inheritdoc}
-     */
-    public const LISTENERS = [];
+    public const ACTIONS = [];
 }
 ```
 
-The event class must implement `EventInterface` interface.
+The event class must implement `GateInterface` interface.
 
-The event class must extend `Event` class.
+The event class must extend `Gate` class.
 
-The event class must define `ACTION` constant, which is the event action name.
+The event class must define `ACTIONS` constant, which is the gate methods that will be defined with the `Illuminate\Support\Facades\Gate` class.
 
-The `LISTENERS` constant is an array of listener classes that will be called when the event is triggered.
-
-Now, let's create our event listener `CreateUserListener`.
-
-you can use the command `php artisan core:make-listener CreateUserListener` to create the event listener class.
+Now, let's define our gate first method `show`.
 
 ``` php
 <?php
 
-namespace App\Listeners;
+namespace App\Http\Gates;
 
-use Raid\Core\Event\Events\Contracts\EventListenerInterface;
-
-class CreateUserListener implements EventListenerInterface
-{
-    /**
-     * Initialize the listener.
-     */
-    public function init(): void
-    {
-    }
-
-    /**
-     * Handle the listener.
-     */
-    public function handle(): void
-    {
-    }
-}
-```
-
-The event listener class must implement `EventListenerInterface` interface.
-
-The `init` method is the method that will be called when the event listener is initialized.
-
-The `handle` method is the method that will be called when the event is triggered.
-
-Let's finish our event class and listener class.
-
-``` php
-<?php
-
-namespace App\Events;
-
-use Raid\Core\Event\Events\Contracts\EventInterface;
-use Raid\Core\Event\Events\Event;
-
-class CreateUserEvent extends Event implements EventInterface
-{
-    /**
-     * {@inheritdoc}
-     */
-    public const ACTION = 'create';
-
-    /**
-     * {@inheritdoc}
-     */
-    public const LISTENERS = [
-        CreateUserListener::class,
-    ];
-}
-```
-
-``` php
-<?php
-
-namespace App\Listeners;
-
+use App\Models\Post;
 use App\Models\User;
-use Raid\Core\Event\Events\Contracts\EventListenerInterface;
+use Raid\Core\Gate\Gates\Contracts\GateInterface;
+use Raid\Core\Gate\Gates\Gate;
 
-class CreateUserListener implements EventListenerInterface
+class PostGate extends Gate implements GateInterface
 {
     /**
-     * Handle the listener.
+     * {@inheritdoc}
      */
-    public function handle(User $user): void
+    public const ACTIONS = [
+        'show',
+    ];
+
+    /**
+     * Determine if the user can show the post.
+     */
+    public function show(User $user, Post $post): bool
     {
-        // here we can do many things with the event given arguments.
+        return $post->isPublic() || $user->isAdmin() || $user->isAuthor($post);
     }
 }
 ```
 
-Now, let's trigger the event with its listeners.
+Great, now we can use the `show` method/action in the `PostController`.
 
 ``` php
 <?php
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Post;
 
-class UserController extends Controller
+class PostController extends Controller
 {
     /**
      * Invoke the controller method.
      */
-    public function __invoke(Request $request)
+    public function __invoke(Post $post)
     {
-        $user = User::create($request->only(['name', 'email', 'password']));
-    
-        User::events()->trigger('create', $user);
+        Post::gates()->authorize('show', $post);
+
+        return response()->json([
+            'post' => $post,
+        ]);
     }
 }
 ```
 
-The `events` method is a static method that will be called from the `Eventable` trait.
+The `gates` method is a static method that will be called from the `gateable` trait.
 
-The `trigger` method is a method that will be called from the `Events` and `Listeners` related to the triggered action.
+The `authorize` method is a method that will lead to call `Illuminate\Support\Facades\Gate` class authorize method.
 
-This will call the `handle` method in each listener
-related to the triggered event action without calling the `init` method.
+The `authorize` method will throw `Illuminate\Auth\Access\AuthorizationException` exception if the gate method returns `false`.
+
+The `authorize` method will return based on defined actions in the related gate class.
 
 And that's it.
 
