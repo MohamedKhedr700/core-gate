@@ -31,7 +31,7 @@ class PostController extends Controller
         Post::gates()->authorize('show', $post);
         
         return response()->json([
-            'post' => $post,
+            'resource' => $post,
         ]);
     }
 }
@@ -192,7 +192,7 @@ class PostController extends Controller
         Post::gates()->authorize('show', $post);
 
         return response()->json([
-            'post' => $post,
+            'resource' => $post,
         ]);
     }
 }
@@ -206,6 +206,55 @@ The `authorize` method will throw `Illuminate\Auth\Access\AuthorizationException
 
 The `authorize` method will return based on defined actions in the related gate class.
 
+You can use the `Illuminate\Support\Facades\Gate` to authorize gateable actions like this:
+
+``` php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Post;
+
+class PostController extends Controller
+{
+    /**
+     * Invoke the controller method.
+     */
+    public function __invoke(Post $post)
+    {
+        Gate::authorize('post.show', $post);
+
+        return response()->json([
+            'resource' => $post,
+        ]);
+    }
+}
+```
+
+We can override the gateable class name by defining `gateableName` method in our class.
+
+``` php
+<?php
+
+namespace App\Models;
+
+use App\Http\Gates\PostGate;
+use Illuminate\Database\Eloquent\Model;
+use Raid\Core\Gate\Traits\Gate\Gateable;
+
+class Post extends Model
+{
+    use Gateable;
+    
+    /**
+     * Get gateable name.
+     */
+    public static function gateableName(): string
+    {
+        return 'post';
+    }
+}
+```
 And that's it.
 
 ## License
