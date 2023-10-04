@@ -59,9 +59,9 @@ The gateable class must use `Gateable` trait.
 
 To define the gates, we can use two ways.
 
-But remember if `getGates` method is defined, the `config/gate.php` gates will be ignored.
+But remember if `getGates` method is defined, the `config/gate.php` gates will be ignored for this gateable class.
 
-1.Define `getGates` method.
+1.Define `getGates` method and add your eventable class to `config/gate.php` gateables.
 
 ``` php
 <?php
@@ -72,7 +72,7 @@ use App\Http\Gates\PostGate;
 use Illuminate\Database\Eloquent\Model;
 use Raid\Core\Gate\Traits\Gate\Gateable;
 
-class User extends Model
+class Post extends Model
 {
     use Gateable;
     
@@ -87,6 +87,15 @@ class User extends Model
         ];
     }
 }
+```
+
+and in `config/gate.php` gateables.
+
+``` php
+'gateables' => [
+    // here we define our gateable class.
+    Post::class,
+], 
 ```
 
 2. Define `config/gate.php` events.
@@ -215,7 +224,6 @@ instead of using the issue tracker.
 ## About Raid
 
 Raid is a PHP framework created by **[Mohamed Khedr](https://github.com/MohamedKhedr700)**
-
 and it is maintained by **[Mohamed Khedr](https://github.com/MohamedKhedr700)**.
 
 ## Support Raid
