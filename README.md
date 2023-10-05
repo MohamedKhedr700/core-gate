@@ -57,11 +57,13 @@ class Post extends Model
 
 The gateable class must use `Gateable` trait.
 
-To define the gates, we can use two ways.
+<br>
+
+To define our gates, we have two ways.
 
 But remember if `getGates` method is defined, the `config/gate.php` gates will be ignored for this gateable class.
 
-1.Define `getGates` method and add your eventable class to `config/gate.php` gateables.
+- Denfine `getGates` method in the gateable class, and define the gateable itself in `config/gate.php` gateables.
 
 ``` php
 <?php
@@ -89,7 +91,7 @@ class Post extends Model
 }
 ```
 
-and in `config/gate.php` gateables.
+in `config/gate.php` gateables.
 
 ``` php
 'gateables' => [
@@ -98,7 +100,7 @@ and in `config/gate.php` gateables.
 ], 
 ```
 
-2. Define `config/gate.php` events.
+- or define gateable with gates in `config/gate.php` gates.
 
 ``` php
 'gates' => [
@@ -110,6 +112,10 @@ and in `config/gate.php` gateables.
 ], 
 ```
 
+<br>
+
+### Gate
+
 Now, let's create our gate class `PostGate`.
 
 you can use this command to create the gate class.
@@ -117,8 +123,6 @@ you can use this command to create the gate class.
 ``` bash
 php artisan core:make-gate PostGate
 ```
-Here is the gate class.
-
 ``` php
 <?php
 
@@ -255,6 +259,9 @@ class Post extends Model
     }
 }
 ```
+
+<br>
+
 And that's it.
 
 ## License
