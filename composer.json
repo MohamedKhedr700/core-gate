@@ -14,7 +14,7 @@
     "require": {
         "php": "^8.2",
         "raid/core-command": "dev-main",
-        "laravel/pint": "dev-main"
+        "laravel/pint": "^1.0"
     },
     "scripts": {
         "pint": [
