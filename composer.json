@@ -13,7 +13,10 @@
     ],
     "require": {
         "php": "^8.2",
-        "raid/core-command": "dev-main"
+        "raid/core-command": "*"
+    },
+    "require-dev": {
+        "laravel/pint": "*"
     },
     "scripts": {
         "pint": [
