@@ -3,6 +3,7 @@
 namespace Raid\Core\Gate\Gates;
 
 use Illuminate\Support\Facades\Gate as IlluminateGate;
+use Illuminate\Support\Str;
 use Raid\Core\Gate\Gates\Contracts\GateInterface;
 
 abstract class Gate implements GateInterface
@@ -72,14 +73,16 @@ abstract class Gate implements GateInterface
      */
     public function defineActionMethod(string $action): void
     {
-        if (! method_exists($this, $action)) {
+        $method = Str::camel($action);
+
+        if (! method_exists($this, $method)) {
             return;
         }
 
         $gateableAction = $this->getGateableAction($action);
 
-        IlluminateGate::define($gateableAction, function ($account, ...$arguments) use ($action) {
-            return $this->{$action}($account, ...$arguments);
+        IlluminateGate::define($gateableAction, function ($account, ...$arguments) use ($method) {
+            return $this->{$method}($account, ...$arguments);
         });
 
         //        IlluminateGate::define($gateableMethod, [static::class, $method]);
