@@ -14,9 +14,7 @@
         "php": "^8.2",
         "raid/core-command": "*"
     },
-    "require-dev": {
-        "laravel/pint": "*"
-    },
+    "require-dev": {},
     "scripts": {
         "pint": [
             "./vendor/bin/pint --config pint.json "
